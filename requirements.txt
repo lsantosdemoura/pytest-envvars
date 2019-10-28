@@ -1,2 +1,5 @@
 django==2.2.6
 pytest-envvars==1.0.0
+python-decouple==3.1
+pytest==5.2.2
+pytest-django==3.6.0

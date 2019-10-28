@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qd=-n0hvg-2-o6&0g&+fuv&6vs8w(!9@15-bh&%w0j$*28z!a)'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -105,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -120,3 +121,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Envvars to test pytest-envvars
+PYTEST_ENVVAR_BOOL = config('PYTEST_ENVVAR_BOOL', default=True, cast=bool)
+PYTEST_ENVVAR_STR = config('PYTEST_ENVVAR_STR', default='str_test')
+PYTEST_ENVVAR_INT = config('PYTEST_ENVVAR_INT', default='123', cast=int)
+PYTEST_ENVVAR_FLOAT = config('PYTEST_ENVVAR_FLOAT', default='123.456', cast=float)
+PYTEST_ENVVAR_LIST = config('PYTEST_ENVVAR_LIST', default='list_test', cast=Csv())
+PYTEST_ENVVAR_TUPLE = config('PYTEST_ENVVAR_TUPLE', default='tuple_test', cast=Csv(post_process=tuple))
+PYTEST_ENVVAR_GENERIC_USE = config('PYTEST_ENVVAR_GENERIC_USE')
